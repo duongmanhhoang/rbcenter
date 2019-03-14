@@ -51,5 +51,6 @@
 
 <!--begin::Base Scripts -->
 @include('admin.layouts.script')
+@yield('script')
 </body>
 </html>

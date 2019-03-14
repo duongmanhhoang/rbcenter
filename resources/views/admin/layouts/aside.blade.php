@@ -33,19 +33,19 @@
 
                 <ul class="m-menu__subnav">
                     <li class="m-menu__item " aria-haspopup="true">
-                        <a href="javascript:;" class="m-menu__link ">
+                        <a href="{{route('admin.users.create')}}" class="m-menu__link ">
                             <i class="m-menu__link-bullet fa fa-plus">
                                 <span></span>
                             </i>
-                            <span class="m-menu__link-text">Add</span>
+                            <span class="m-menu__link-text">Thêm</span>
                         </a>
                     </li>
                     <li class="m-menu__item " aria-haspopup="true">
-                        <a href="javascript:;" class="m-menu__link ">
+                        <a href="{{route('admin.users.index')}}" class="m-menu__link ">
                             <i class="m-menu__link-bullet fa fa-list">
                                 <span></span>
                             </i>
-                            <span class="m-menu__link-text">List</span>
+                            <span class="m-menu__link-text">Danh sách</span>
                         </a>
                     </li>
 

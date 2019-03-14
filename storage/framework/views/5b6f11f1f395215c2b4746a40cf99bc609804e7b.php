@@ -75,7 +75,7 @@
 
                                     </a>
 
-                                    <form id="logout-form" action="" method="POST" style="display: none;">
+                                    <form id="logout-form" action="<?php echo e(route('admin.logout')); ?>" method="get" style="display: none;">
                                         <?php echo csrf_field(); ?>
                                     </form>
 

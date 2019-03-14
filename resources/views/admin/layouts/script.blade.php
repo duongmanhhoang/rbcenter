@@ -17,6 +17,7 @@
         type="text/javascript"></script>
 <script src="{{asset('themes/admin/metronic/demo/default/custom/crud/metronic-datatable/base/data-local.js')}}"
         type="text/javascript"></script>
+
 <script src="{{asset('themes/admin/metronic/demo/default/custom/crud/metronic-datatable/base/html-table.js')}}"
         type="text/javascript"></script>
 

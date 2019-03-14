@@ -11,6 +11,9 @@ class LoginController extends Controller
 {
     public function index()
     {
+        if(session('admin')){
+            return redirect(route('admin.index'));
+        }
         return view('admin.auth.index');
     }
 
@@ -32,5 +35,11 @@ class LoginController extends Controller
                 $request->session()->flash('login_error');
                 return redirect(route('admin.login'));
         }
+    }
+
+    public function logout(Request $request)
+    {
+        session()->forget('admin');
+        return redirect(route('admin.login'));
     }
 }

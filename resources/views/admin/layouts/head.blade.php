@@ -9,7 +9,7 @@
     <script>
         WebFont.load({
             google: {
-                "families": ["Poppins:300,400,500,600,700", "Roboto:300,400,500,600,700"]
+                "families": ["Poppins:300,400,500,600,700"]
             },
             active: function() {
                 sessionStorage.fonts = true;
@@ -40,7 +40,7 @@
 
 
     <!--Style.css-->
-    <link type="text/css" rel="stylesheet" href="{{asset('admin/css/style.css')}}">
+
     <style type="text/css">span.im-caret {
             -webkit-animation: 1s blink step-end infinite;
             animation: 1s blink step-end infinite;
