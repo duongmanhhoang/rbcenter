@@ -14,22 +14,17 @@ class UserController extends Controller
     public function index()
     {
         $api = new Api();
-        if(isset($_GET['status']) && isset($_GET['role_id']) && $_GET['role_id'] !='' && $_GET['status'] != ''){
-            $users = $api->sendRequest('get', 'users?order_by=id,desc&status='.$_GET['status'].'&role_id='.$_GET['role_id'])->data;
-        }
-        elseif(isset($_GET['role_id']) && $_GET['role_id'] == '' && $_GET['status'] !='' && !isset($_GET['keyword'])){
-            $users = $api->sendRequest('get', 'users?order_by=id,desc&status='.$_GET['status'])->data;
-        }
-        elseif(isset($_GET['status']) && $_GET['status'] == '' && $_GET['role_id'] != '' && !isset($_GET['keyword'])){
-            $users = $api->sendRequest('get', 'users?order_by=id,desc&role_id='.$_GET['role_id'])->data;
-        }
-        elseif(isset($_GET['status']) && isset($_GET['role_id']) && $_GET['status'] == '' && $_GET['role_id'] == '' && !isset($_GET['keyword'])){
+        if (isset($_GET['status']) && isset($_GET['role_id']) && $_GET['role_id'] != '' && $_GET['status'] != '') {
+            $users = $api->sendRequest('get', 'users?order_by=id,desc&status=' . $_GET['status'] . '&role_id=' . $_GET['role_id'])->data;
+        } elseif (isset($_GET['role_id']) && $_GET['role_id'] == '' && $_GET['status'] != '' && !isset($_GET['keyword'])) {
+            $users = $api->sendRequest('get', 'users?order_by=id,desc&status=' . $_GET['status'])->data;
+        } elseif (isset($_GET['status']) && $_GET['status'] == '' && $_GET['role_id'] != '' && !isset($_GET['keyword'])) {
+            $users = $api->sendRequest('get', 'users?order_by=id,desc&role_id=' . $_GET['role_id'])->data;
+        } elseif (isset($_GET['status']) && isset($_GET['role_id']) && $_GET['status'] == '' && $_GET['role_id'] == '' && !isset($_GET['keyword'])) {
             $users = $api->sendRequest('get', 'users?order_by=id,desc')->data;
-        }
-        elseif(isset($_GET['keyword'])){
-            $users = $api->sendRequest('get', 'users?order_by=id,desc&email=*'.$_GET['keyword'].'*')->data;
-        }
-        else{
+        } elseif (isset($_GET['keyword'])) {
+            $users = $api->sendRequest('get', 'users?order_by=id,desc&email=*' . $_GET['keyword'] . '*')->data;
+        } else {
             $users = $api->sendRequest('get', 'users?order_by=id,desc')->data;
         }
 
@@ -56,15 +51,16 @@ class UserController extends Controller
 
     public function store(CreateUserRequest $request)
     {
-        $data = $request->all();
-        $data['slug'] = Str::slug($data['full_name'] . uniqid(), '-');
-        $data['username'] = preg_replace('([\s]+)', '', $request->username);
         $api = new Api();
+        $data = $request->all();
+        $data['slug'] = Str::slug($data['full_name'] . '-' . uniqid(), '-');
+        $data['username'] = preg_replace('([\s]+)', '', $request->username);
+
         if ($request->hasFile('avatar')) {
             $avatar = $this->uploadFile($request->avatar);
             $data['avatar'] = $avatar;
-        }else{
-            $data['avatar'] = 'https://drive.google.com/uc?id=1wvXU91pKvSpblr0BwoEHNQASlT6VFhsw&export=media' ;
+        } else {
+            $data['avatar'] = 'https://drive.google.com/uc?id=1wvXU91pKvSpblr0BwoEHNQASlT6VFhsw&export=media';
         }
 
         $store = $api->sendRequest('post', 'users/store', $data);
@@ -76,6 +72,21 @@ class UserController extends Controller
             $request->session()->flash('username_taken');
             return redirect()->back();
         }
+        if ($store->message == "User created successfully") {
+            if ($store->data->role_id == 500) {
+                $latest_student_code = substr($api->sendRequest('get', 'student-info?order_by=id,desc&limit=1')->data[0]->student_code, '2', '5');
+                $new_num = $latest_student_code + 1;
+                $zero = '';
+                for ($i = 0; $i < 5 - strlen($new_num); $i++) {
+                    $zero = '0' . $zero;
+                }
+                $new_code = $zero.$new_num;
+                $info['user_id'] = $store->data->id;
+                $info['student_code'] = 'RB'.$new_code;
+
+                $api->sendRequest('post', 'student-info/store', $info);
+            }
+        }
         $request->session()->flash('store');
         return redirect(route('admin.users.index'));
     }
@@ -84,15 +95,14 @@ class UserController extends Controller
     {
         $data = $request->all();
         $data['username'] = preg_replace('([\s]+)', '', $request->username);
-        if($request->hasFile('avatar')){
+        if ($request->hasFile('avatar')) {
             $avatar = $this->uploadFile($request->avatar);
             $data['avatar'] = $avatar;
-        }
-        else{
+        } else {
             $data['avatar'] = $request->old_avatar;
         }
         $api = new Api();
-        $update = $api->sendRequest('post', 'users/update/'.$id, $data);
+        $update = $api->sendRequest('post', 'users/update/' . $id, $data);
         if (isset($update->data->email[0]) && $update->data->email[0] == "The email has already been taken.") {
             $request->session()->flash('email_taken');
             return redirect()->back();
@@ -108,24 +118,24 @@ class UserController extends Controller
     public function disable(Request $request, $id)
     {
         $api = new Api();
-        $user = $api->sendRequest('get' , 'users/'.$id)->data;
-        if($user->role_id == 1){
+        $user = $api->sendRequest('get', 'users/' . $id)->data;
+        if ($user->role_id == 1) {
             $request->session()->flash('is_admin');
             return redirect()->back();
         }
-        if($user->id == session('admin')->id){
+        if ($user->id == session('admin')->id) {
             $request->session()->flash('yourself');
             return redirect()->back();
         }
-        $api->sendRequest('get' , 'users/disable/'.$id);
+        $api->sendRequest('get', 'users/disable/' . $id);
         $request->session()->flash('disable');
         return redirect()->back();
     }
 
-    public function restore(Request $request,$id)
+    public function restore(Request $request, $id)
     {
         $api = new Api();
-        $api->sendRequest('get' ,'users/restore/'.$id);
+        $api->sendRequest('get', 'users/restore/' . $id);
         $request->session()->flash('restore');
         return redirect()->back();
     }
@@ -133,16 +143,16 @@ class UserController extends Controller
     public function ban(Request $request, $id)
     {
         $api = new Api();
-        $user = $api->sendRequest('get' , 'users/'.$id)->data;
-        if($user->role_id == 1){
+        $user = $api->sendRequest('get', 'users/' . $id)->data;
+        if ($user->role_id == 1) {
             $request->session()->flash('is_admin');
             return redirect()->back();
         }
-        if($user->id == session('admin')->id){
+        if ($user->id == session('admin')->id) {
             $request->session()->flash('yourself');
             return redirect()->back();
         }
-        $api->sendRequest('get' , 'users/ban/'.$id);
+        $api->sendRequest('get', 'users/ban/' . $id);
         $request->session()->flash('ban');
         return redirect()->back();
     }
