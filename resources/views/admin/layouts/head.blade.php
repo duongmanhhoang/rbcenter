@@ -3,19 +3,21 @@
     <title>RB Center | Dashboard</title>
     <meta name="description" content="Latest updates and statistic charts">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
 
     <!--begin::Web font -->
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
-    <script>
-        WebFont.load({
-            google: {
-                "families": ["Poppins:300,400,500,600,700"]
-            },
-            active: function() {
-                sessionStorage.fonts = true;
-            }
-        });
-    </script>
+    {{--<script>--}}
+        {{--WebFont.load({--}}
+            {{--google: {--}}
+                {{--"families": ["Poppins:300,400,500,600,700"]--}}
+            {{--},--}}
+            {{--active: function() {--}}
+                {{--sessionStorage.fonts = true;--}}
+            {{--}--}}
+        {{--});--}}
+    {{--</script>--}}
+    <link href="{{asset('bower_components/admin/css/style.css')}}" type="text/css" rel="stylesheet">
 
 
     <!--end::Web font -->
@@ -23,15 +25,15 @@
     <!--begin::Base Styles -->
 
     <!--begin::Page Vendors -->
-    <link href="{{asset('themes/admin/metronic/vendors/custom/fullcalendar/fullcalendar.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('bower_components/admin/metronic/vendors/custom/fullcalendar/fullcalendar.bundle.css')}}" rel="stylesheet" type="text/css" />
 
 {{--<!--RTL version:<link href="{{asset('admin/metronic/vendors/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />-->--}}
 
 <!--end::Page Vendors -->
-    <link href="{{asset('themes/admin/metronic/vendors/base/vendors.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('bower_components/admin/metronic/vendors/base/vendors.bundle.css')}}" rel="stylesheet" type="text/css" />
 
 <!--RTL version:<link href="{{asset('admin/metronic/vendors/base/vendors.bundle.rtl.css" rel="stylesheet')}}" type="text/css" />-->
-    <link href="{{asset('themes/admin/metronic/demo/default/base/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('bower_components/admin/metronic/demo/default/base/style.bundle.css')}}" rel="stylesheet" type="text/css" />
 
 {{--<!--RTL version:<link href="{{asset('admin/metronic/demo/default/base/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />-->--}}
 
@@ -112,7 +114,7 @@
 
     <style type="text/css">/* Chart.js */
         @-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style>
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 
-    {{--<script src="{{asset('admin/js/jquery.min.js')}}"></script>--}}
-    {{--<script src="{{asset('admin/js/jquery-ui.min.js')}}"></script>--}}
+
 </head>

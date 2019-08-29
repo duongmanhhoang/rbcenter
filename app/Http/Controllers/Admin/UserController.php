@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Api\Api;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreateUserRequest;
+
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
 use App\Http\Requests\Admin\UpdateUserRequest;
 
@@ -14,24 +18,90 @@ class UserController extends Controller
     public function index()
     {
         $api = new Api();
-        if (isset($_GET['status']) && isset($_GET['role_id']) && $_GET['role_id'] != '' && $_GET['status'] != '') {
-            $users = $api->sendRequest('get', 'users?order_by=id,desc&status=' . $_GET['status'] . '&role_id=' . $_GET['role_id'])->data;
-        } elseif (isset($_GET['role_id']) && $_GET['role_id'] == '' && $_GET['status'] != '' && !isset($_GET['keyword'])) {
-            $users = $api->sendRequest('get', 'users?order_by=id,desc&status=' . $_GET['status'])->data;
-        } elseif (isset($_GET['status']) && $_GET['status'] == '' && $_GET['role_id'] != '' && !isset($_GET['keyword'])) {
-            $users = $api->sendRequest('get', 'users?order_by=id,desc&role_id=' . $_GET['role_id'])->data;
-        } elseif (isset($_GET['status']) && isset($_GET['role_id']) && $_GET['status'] == '' && $_GET['role_id'] == '' && !isset($_GET['keyword'])) {
-            $users = $api->sendRequest('get', 'users?order_by=id,desc')->data;
+        if (isset($_GET['status']) && isset($_GET['role_id']) && $_GET['status'] != '' && $_GET['role_id'] != '') {
+            if (isset($_GET['page'])) {
+                $paginator = $api->sendRequest('get', 'api/users/paginate/10?page=' . $_GET['page'] . '&status=' . $_GET['status'] . '&role_id=' . $_GET['role_id'])->data;
+            } else {
+                $paginator = $api->sendRequest('get', 'api/users/paginate/10?status=' . $_GET['status'] . '&role_id=' . $_GET['role_id'])->data;
+
+            };
+            $url = route('admin.users.index') . '?role_id=' . $_GET['role_id'] . '&status=' . $_GET['status'];
+        } elseif (isset($_GET['status']) && isset($_GET['role_id']) && $_GET['status'] == '' && $_GET['role_id'] == '') {
+            if (isset($_GET['page'])) {
+                $paginator = $api->sendRequest('get', 'api/users/paginate/10?page=' . $_GET['page'])->data;
+            } else {
+                $paginator = $api->sendRequest('get', 'api/users/paginate/10?page=1')->data;
+
+            };
+            $url = route('admin.users.index') . "?role_id=&status=";
+        } elseif (isset($_GET['status']) && isset($_GET['role_id']) && $_GET['status'] == '') {
+
+            if (isset($_GET['page'])) {
+                $paginator = $api->sendRequest('get', 'api/users/paginate/10?page=' . $_GET['page'] . '&role_id=' . $_GET['role_id'])->data;
+            } else {
+                $paginator = $api->sendRequest('get', 'api/users/paginate/10?page=1&role_id=' . $_GET['role_id'])->data;
+
+            };
+            $url = route('admin.users.index') . "?role_id=" . $_GET['role_id'] . "&status=";
+        } elseif (isset($_GET['status']) && isset($_GET['role_id']) && $_GET['role_id'] == '') {
+            if (isset($_GET['page'])) {
+                $paginator = $api->sendRequest('get', 'api/users/paginate/10?page=' . $_GET['page'] . '&status=' . $_GET['status'])->data;
+            } else {
+                $paginator = $api->sendRequest('get', 'api/users/paginate/10?page=1&status=' . $_GET['status'])->data;
+
+            };
+            $url = route('admin.users.index') . "?status=" . $_GET['status'] . "&role_id=";
+        } elseif (isset($_GET['status'])) {
+            if (isset($_GET['page'])) {
+                $paginator = $api->sendRequest('get', 'api/users/paginate/10?page=' . $_GET['page'] . '&status=' . $_GET['status'])->data;
+            } else {
+                $paginator = $api->sendRequest('get', 'api/users/paginate/10?page=1&status=' . $_GET['status'])->data;
+
+            };
+            $url = route('admin.users.index') . "?status=" . $_GET['status'];
+
+        } elseif (isset($_GET['role_id'])) {
+            if (isset($_GET['page'])) {
+                $paginator = $api->sendRequest('get', 'api/users/paginate/10?page=' . $_GET['page'] . '&role_id=' . $_GET['role_id'])->data;
+            } else {
+                $paginator = $api->sendRequest('get', 'api/users/paginate/10?page=1&role_id=' . $_GET['role_id'])->data;
+
+            };
+            $url = route('admin.users.index') . "?role_id=" . $_GET['role_id'];
+        } elseif (isset($_GET['page'])) {
+            $paginator = $api->sendRequest('get', 'api/users/paginate/10?page=' . $_GET['page'])->data;
+            $url = route('admin.users.index');
         } elseif (isset($_GET['keyword'])) {
-            $users = $api->sendRequest('get', 'users?order_by=id,desc&email=*' . $_GET['keyword'] . '*')->data;
+            if (isset($_GET['page'])) {
+                $paginator = $api->sendRequest('get', 'api/users/paginate/10?email=*' . $_GET['keyword'] . '*&page=' . $_GET['page'])->data;
+            } else {
+                $paginator = $api->sendRequest('get', 'api/users/paginate/10?page=1&email=*' . $_GET['keyword'] . '*')->data;
+
+            };
+            $url = route('admin.users.index') . '?keyword=' . $_GET['keyword'];
         } else {
-            $users = $api->sendRequest('get', 'users?order_by=id,desc')->data;
+            $paginator = $api->sendRequest('get', 'api/users/paginate/10')->data;
+            $url = route('admin.users.index');
         }
+
+        $data = collect($paginator->data);
+
+
+        $users = new LengthAwarePaginator(
+            $data,
+            $paginator->total,
+            $paginator->per_page,
+            $paginator->current_page,
+            ['path' => $url, 'pageName' => 'page']
+        );
 
         $data = compact(
             'users'
         );
+
+
         return view('admin.users.index', $data);
+
     }
 
     public function create()
@@ -42,7 +112,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $api = new Api();
-        $user = $api->sendRequest('get', 'users/' . $id)->data;
+        $user = $api->sendRequest('get', 'api/users/' . $id)->data;
         $data = compact(
             'user'
         );
@@ -57,13 +127,13 @@ class UserController extends Controller
         $data['username'] = preg_replace('([\s]+)', '', $request->username);
 
         if ($request->hasFile('avatar')) {
-            $avatar = $this->uploadFile($request->avatar);
-            $data['avatar'] = $avatar;
+            $avatar = $this->uploadImage($request->avatar);
+            $data['avatar'] = $avatar->url;
         } else {
-            $data['avatar'] = 'https://drive.google.com/uc?id=1wvXU91pKvSpblr0BwoEHNQASlT6VFhsw&export=media';
+            $data['avatar'] = 'http://picture.local/images/default.png';
         }
 
-        $store = $api->sendRequest('post', 'users/store', $data);
+        $store = $api->sendRequest('post', 'api/users/store', $data);
         if (isset($store->data->email[0]) && $store->data->email[0] == "The email has already been taken.") {
             $request->session()->flash('email_taken');
             return redirect()->back();
@@ -74,35 +144,36 @@ class UserController extends Controller
         }
         if ($store->message == "User created successfully") {
             if ($store->data->role_id == 500) {
-                $latest_student_code = substr($api->sendRequest('get', 'student-info?order_by=id,desc&limit=1')->data[0]->student_code, '2', '5');
+                $latest_student_code = substr($api->sendRequest('get', 'api/student-info?order_by=id,desc&limit=1')->data[0]->student_code, '2', '5');
                 $new_num = $latest_student_code + 1;
                 $zero = '';
                 for ($i = 0; $i < 5 - strlen($new_num); $i++) {
                     $zero = '0' . $zero;
                 }
-                $new_code = $zero.$new_num;
+                $new_code = $zero . $new_num;
                 $info['user_id'] = $store->data->id;
-                $info['student_code'] = 'RB'.$new_code;
+                $info['student_code'] = 'RB' . $new_code;
 
-                $api->sendRequest('post', 'student-info/store', $info);
+                $api->sendRequest('post', 'api/student-info/store', $info);
             }
         }
         $request->session()->flash('store');
         return redirect(route('admin.users.index'));
     }
 
-    public function update(UpdateUserRequest $request, $id)
+    public
+    function update(UpdateUserRequest $request, $id)
     {
         $data = $request->all();
         $data['username'] = preg_replace('([\s]+)', '', $request->username);
         if ($request->hasFile('avatar')) {
-            $avatar = $this->uploadFile($request->avatar);
-            $data['avatar'] = $avatar;
+            $avatar = $this->uploadImage($request->avatar);
+            $data['avatar'] = $avatar->url;
         } else {
             $data['avatar'] = $request->old_avatar;
         }
         $api = new Api();
-        $update = $api->sendRequest('post', 'users/update/' . $id, $data);
+        $update = $api->sendRequest('post', 'api/users/update/' . $id, $data);
         if (isset($update->data->email[0]) && $update->data->email[0] == "The email has already been taken.") {
             $request->session()->flash('email_taken');
             return redirect()->back();
@@ -118,16 +189,12 @@ class UserController extends Controller
     public function disable(Request $request, $id)
     {
         $api = new Api();
-        $user = $api->sendRequest('get', 'users/' . $id)->data;
-        if ($user->role_id == 1) {
-            $request->session()->flash('is_admin');
-            return redirect()->back();
-        }
+        $user = $api->sendRequest('get', 'api/users/' . $id)->data;
         if ($user->id == session('admin')->id) {
             $request->session()->flash('yourself');
             return redirect()->back();
         }
-        $api->sendRequest('get', 'users/disable/' . $id);
+        $api->sendRequest('get', 'api/users/disable/' . $id);
         $request->session()->flash('disable');
         return redirect()->back();
     }
@@ -135,7 +202,7 @@ class UserController extends Controller
     public function restore(Request $request, $id)
     {
         $api = new Api();
-        $api->sendRequest('get', 'users/restore/' . $id);
+        $api->sendRequest('get', 'api/users/restore/' . $id);
         $request->session()->flash('restore');
         return redirect()->back();
     }
@@ -143,16 +210,20 @@ class UserController extends Controller
     public function ban(Request $request, $id)
     {
         $api = new Api();
-        $user = $api->sendRequest('get', 'users/' . $id)->data;
-        if ($user->role_id == 1) {
-            $request->session()->flash('is_admin');
-            return redirect()->back();
-        }
-        if ($user->id == session('admin')->id) {
+        $user = $api->sendRequest('get', 'api/users/' . $id)->data;
+        if (session('admin') && $user->id == session('admin')->id) {
             $request->session()->flash('yourself');
             return redirect()->back();
         }
-        $api->sendRequest('get', 'users/ban/' . $id);
+
+        if (Cookie::get('cookie_admin') != null) {
+            $cookie = json_decode(Cookie::get('cookie_admin'));
+            if ($user->id == $cookie->id) {
+                $request->session()->flash('yourself');
+                return redirect()->back();
+            }
+        }
+        $api->sendRequest('get', 'api/users/ban/' . $id);
         $request->session()->flash('ban');
         return redirect()->back();
     }

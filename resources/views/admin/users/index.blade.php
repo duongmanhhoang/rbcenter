@@ -1,5 +1,7 @@
 @extends('admin.layouts.main')
 
+
+
 @section('content')
     <div class="m-content">
         <div class="m-portlet m-portlet--mobile">
@@ -13,8 +15,6 @@
                 </div>
             </div>
             <div class="m-portlet__body">
-
-                <!--begin: Search Form -->
                 <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
                     <div class="row align-items-center">
 
@@ -22,66 +22,65 @@
 
                             <div class="form-group m-form__group row align-items-center">
                                 <div class="col-md-8">
-                                        <form method="get" action="" class="row">
-                                            <div class="col-md-6">
-                                                <div class="m-form__group m-form__group--inline">
-                                                    <div class="m-form__label">
-                                                        <label>Trạng thái:</label>
-                                                    </div>
-                                                    <div class="m-form__control">
-
-                                                        <select class="form-control m-bootstrap-select" id="m_form_status"
-                                                                name="status" onchange="this.form.submit()">
-                                                            <option value="">Tất cả</option>
-                                                            <option value="1" @if(isset($_GET['status']) && $_GET['status'] == 1){{'selected'}}@endif>
-                                                                Hoạt động
-                                                            </option>
-                                                            <option value="0" @if(isset($_GET['status']) && $_GET['status'] == '0'){{'selected'}}@endif>
-                                                                Xóa tạm
-                                                            </option>
-                                                            <option value="-1" @if(isset($_GET['status']) && $_GET['status'] == -1){{'selected'}}@endif>
-                                                                Ban
-                                                            </option>
-                                                        </select>
-
-                                                    </div>
+                                    <form method="get" action="" class="row">
+                                        <div class="col-md-6">
+                                            <div class="m-form__group m-form__group--inline">
+                                                <div class="m-form__label">
+                                                    <label>Trạng thái:</label>
                                                 </div>
-                                                <div class="d-md-none m--margin-bottom-10"></div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="m-form__group m-form__group--inline">
-                                                    <div class="m-form__label">
-                                                        <label class="m-label m-label--single">Quyền:</label>
-                                                    </div>
-                                                    <div class="m-form__control">
+                                                <div class="m-form__control">
+                                                    <select class="form-control" id="m_form_status"
+                                                            name="status" onchange="this.form.submit()">
+                                                        <option value="">Tất cả</option>
+                                                        <option value="1" @if(isset($_GET['status']) && $_GET['status'] == 1){{'selected'}}@endif>
+                                                            Hoạt động
+                                                        </option>
+                                                        <option value="0" @if(isset($_GET['status']) && $_GET['status'] == '0'){{'selected'}}@endif>
+                                                            Xóa tạm
+                                                        </option>
+                                                        <option value="-1" @if(isset($_GET['status']) && $_GET['status'] == -1){{'selected'}}@endif>
+                                                            Ban
+                                                        </option>
+                                                    </select>
 
-                                                        <select class="form-control m-bootstrap-select" id="m_form_type"
-                                                                name="role_id" onchange="this.form.submit()">
-                                                            <option value="" selected>
-                                                                Tất cả
-                                                            </option>
-                                                            <option value="1" @if(isset($_GET['role_id']) && $_GET['role_id'] == 1){{'selected'}}@endif>
-                                                                Admin
-                                                            </option>
-                                                            <option value="100" @if(isset($_GET['role_id']) && $_GET['role_id'] == 100){{'selected'}}@endif>
-                                                                Người điều hành
-                                                            </option>
-                                                            <option value="200" @if(isset($_GET['role_id']) && $_GET['role_id'] == 200){{'selected'}}@endif>
-                                                                Người viết bài
-                                                            </option>
-                                                            <option value="400" @if(isset($_GET['role_id']) && $_GET['role_id'] == 400){{'selected'}}@endif>
-                                                                Giáo viên
-                                                            </option>
-                                                            <option value="500" @if(isset($_GET['role_id']) && $_GET['role_id'] == 500){{'selected'}}@endif>
-                                                                Học sinh
-                                                            </option>
-                                                        </select>
-
-                                                    </div>
                                                 </div>
-                                                <div class="d-md-none m--margin-bottom-10"></div>
                                             </div>
-                                        </form>
+                                            <div class="d-md-none m--margin-bottom-10"></div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="m-form__group m-form__group--inline">
+                                                <div class="m-form__label">
+                                                    <label class="m-label m-label--single">Quyền:</label>
+                                                </div>
+                                                <div class="m-form__control">
+
+                                                    <select class="form-control" id="m_form_type"
+                                                            name="role_id" onchange="this.form.submit()">
+                                                        <option value="" selected>
+                                                            Tất cả
+                                                        </option>
+                                                        <option value="1" @if(isset($_GET['role_id']) && $_GET['role_id'] == 1){{'selected'}}@endif>
+                                                            Admin
+                                                        </option>
+                                                        <option value="100" @if(isset($_GET['role_id']) && $_GET['role_id'] == 100){{'selected'}}@endif>
+                                                            Người điều hành
+                                                        </option>
+                                                        <option value="200" @if(isset($_GET['role_id']) && $_GET['role_id'] == 200){{'selected'}}@endif>
+                                                            Người viết bài
+                                                        </option>
+                                                        <option value="400" @if(isset($_GET['role_id']) && $_GET['role_id'] == 400){{'selected'}}@endif>
+                                                            Giáo viên
+                                                        </option>
+                                                        <option value="500" @if(isset($_GET['role_id']) && $_GET['role_id'] == 500){{'selected'}}@endif>
+                                                            Học sinh
+                                                        </option>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <div class="d-md-none m--margin-bottom-10"></div>
+                                        </div>
+                                    </form>
 
                                 </div>
                                 <div class="col-md-4">
@@ -113,11 +112,7 @@
                         </div>
                     </div>
                 </div>
-
-                <!--end: Search Form -->
-
-                <!--begin: Datatable -->
-                <table class="m-datatable" id="html_table" width="100%">
+                <table class="table table-bordered table-hover">
                     <thead>
                     <tr>
                         <th style="width: 50px">STT</th>
@@ -194,14 +189,17 @@
                         </tr>
                         @php($i++)
                     @endforeach
-
                     </tbody>
                 </table>
 
-                <!--end: Datatable -->
+
+            {{$users->links()}}
             </div>
+
+
         </div>
     </div>
+
 @endsection
 @section('script')
     <script>
