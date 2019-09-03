@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Bangkok',
 
     /*
     |--------------------------------------------------------------------------
@@ -162,10 +162,12 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+
         /*
          * Package Service Providers...
          */
-
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -174,6 +176,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\GoogleDriveServiceProvider::class,
+
 
     ],
 
@@ -225,6 +229,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
 
     ],
 

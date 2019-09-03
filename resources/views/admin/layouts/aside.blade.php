@@ -24,7 +24,7 @@
         <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
             <a href="javascript:;" class="m-menu__link m-menu__toggle">
                 <i class="m-menu__link-icon fa fa-users"></i>
-                <span class="m-menu__link-text">Users</span>
+                <span class="m-menu__link-text">Quản lí người dùng</span>
                 <i class="m-menu__ver-arrow la la-angle-right"></i>
             </a>
             <div class="m-menu__submenu ">
@@ -33,19 +33,19 @@
 
                 <ul class="m-menu__subnav">
                     <li class="m-menu__item " aria-haspopup="true">
-                        <a href="javascript:;" class="m-menu__link ">
+                        <a href="{{route('admin.users.create')}}" class="m-menu__link ">
                             <i class="m-menu__link-bullet fa fa-plus">
                                 <span></span>
                             </i>
-                            <span class="m-menu__link-text">Add</span>
+                            <span class="m-menu__link-text">Thêm</span>
                         </a>
                     </li>
                     <li class="m-menu__item " aria-haspopup="true">
-                        <a href="javascript:;" class="m-menu__link ">
+                        <a href="{{route('admin.users.index')}}" class="m-menu__link ">
                             <i class="m-menu__link-bullet fa fa-list">
                                 <span></span>
                             </i>
-                            <span class="m-menu__link-text">List</span>
+                            <span class="m-menu__link-text">Danh sách</span>
                         </a>
                     </li>
 
@@ -57,6 +57,135 @@
         </li>
         <!--End: User-->
 
+
+        <!--START: Classes-->
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon fa  fa-university"></i>
+                <span class="m-menu__link-text">Quản lí lớp học</span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+
+
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item " aria-haspopup="true">
+                        <a href="{{route('admin.classes.create')}}" class="m-menu__link ">
+                            <i class="m-menu__link-bullet fa fa-plus">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">Thêm</span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true">
+                        <a href="{{route('admin.classes.index')}}" class="m-menu__link ">
+                            <i class="m-menu__link-bullet fa fa-list">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">Danh sách</span>
+                        </a>
+                    </li>
+
+                </ul>
+
+
+
+            </div>
+        </li>
+        <!--End: Classes-->
+
+        <!--START: Products-->
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon fa fa-cubes"></i>
+                <span class="m-menu__link-text">Quản lí sản phẩm</span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+
+
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item " aria-haspopup="true">
+                        <a href="{{route('admin.products.create')}}" class="m-menu__link ">
+                            <i class="m-menu__link-bullet fa fa-plus">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">Thêm</span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true">
+                        <a href="{{route('admin.products.index')}}" class="m-menu__link ">
+                            <i class="m-menu__link-bullet fa fa-list">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">Danh sách</span>
+                        </a>
+                    </li>
+
+                    <li class="m-menu__item " aria-haspopup="true">
+                        <a href="{{route('admin.products.categories.index')}}" class="m-menu__link ">
+                            <i class="m-menu__link-bullet fa fa-list-alt">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">Danh mục sản phẩm</span>
+                        </a>
+                    </li>
+
+                </ul>
+
+
+
+            </div>
+        </li>
+        <!--End: Products-->
+
+        <!--START: Posts-->
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon fa fa-book"></i>
+                <span class="m-menu__link-text">Quản lí bài viết</span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+
+
+                <ul class="m-menu__subnav">
+                    <li class="m-menu__item " aria-haspopup="true">
+                        <a href="{{route('admin.posts.create')}}" class="m-menu__link ">
+                            <i class="m-menu__link-bullet fa fa-plus">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">Thêm</span>
+                        </a>
+                    </li>
+                    <li class="m-menu__item " aria-haspopup="true">
+                        <a href="{{route('admin.posts.index')}}" class="m-menu__link ">
+                            <i class="m-menu__link-bullet fa fa-list">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">Danh sách</span>
+                        </a>
+                    </li>
+
+                    <li class="m-menu__item " aria-haspopup="true">
+                        <a href="{{route('admin.posts.categories.index')}}" class="m-menu__link ">
+                            <i class="m-menu__link-bullet fa fa-list-alt">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">Danh mục bài viết</span>
+                        </a>
+                    </li>
+
+                </ul>
+
+
+
+            </div>
+        </li>
+        <!--End: Posts-->
 
 
 

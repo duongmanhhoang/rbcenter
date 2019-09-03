@@ -62,7 +62,7 @@
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ $auth_user->full_name }} <span class="caret"></span>
+                                    {{\Illuminate\Support\Facades\Auth::custom()->full_name }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -73,7 +73,7 @@
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="" method="POST" style="display: none;">
+                                    <form id="logout-form" action="{{route('admin.logout')}}" method="get" style="display: none;">
                                         @csrf
                                     </form>
 
