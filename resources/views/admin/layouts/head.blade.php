@@ -7,42 +7,10 @@
 
     <!--begin::Web font -->
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
-    {{--<script>--}}
-        {{--WebFont.load({--}}
-            {{--google: {--}}
-                {{--"families": ["Poppins:300,400,500,600,700"]--}}
-            {{--},--}}
-            {{--active: function() {--}}
-                {{--sessionStorage.fonts = true;--}}
-            {{--}--}}
-        {{--});--}}
-    {{--</script>--}}
-    <link href="{{asset('bower_components/admin/css/style.css')}}" type="text/css" rel="stylesheet">
-
-
-    <!--end::Web font -->
-
-    <!--begin::Base Styles -->
-
-    <!--begin::Page Vendors -->
-    <link href="{{asset('bower_components/admin/metronic/vendors/custom/fullcalendar/fullcalendar.bundle.css')}}" rel="stylesheet" type="text/css" />
-
-{{--<!--RTL version:<link href="{{asset('admin/metronic/vendors/custom/fullcalendar/fullcalendar.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />-->--}}
-
-<!--end::Page Vendors -->
-    <link href="{{asset('bower_components/admin/metronic/vendors/base/vendors.bundle.css')}}" rel="stylesheet" type="text/css" />
-
-<!--RTL version:<link href="{{asset('admin/metronic/vendors/base/vendors.bundle.rtl.css" rel="stylesheet')}}" type="text/css" />-->
-    <link href="{{asset('bower_components/admin/metronic/demo/default/base/style.bundle.css')}}" rel="stylesheet" type="text/css" />
-
-{{--<!--RTL version:<link href="{{asset('admin/metronic/demo/default/base/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css" />-->--}}
-
-<!--end::Base Styles -->
-
-
-
-    <!--Style.css-->
-
+    <link href="{{asset('bower_components/bower-rbcenter/admin/css/style.css')}}" type="text/css" rel="stylesheet">
+    <link href="{{asset('bower_components/bower-rbcenter/admin/metronic/vendors/custom/fullcalendar/fullcalendar.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('bower_components/bower-rbcenter/admin/metronic/vendors/base/vendors.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('bower_components/bower-rbcenter/admin/metronic/demo/default/base/style.bundle.css')}}" rel="stylesheet" type="text/css" />
     <style type="text/css">span.im-caret {
             -webkit-animation: 1s blink step-end infinite;
             animation: 1s blink step-end infinite;

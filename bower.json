@@ -14,5 +14,8 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "bower-rbcenter": "https://github.com/duongmanhhoang/bower-rbcenter.git"
+  }
 }

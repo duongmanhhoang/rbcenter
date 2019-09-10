@@ -1,4 +1,3 @@
-<?php /* /var/www/html/rbcenter/admin/resources/views/admin/layouts/header.blade.php */ ?>
 <header id="m_header" class="m-grid__item    m-header " m-minimize-offset="200" m-minimize-mobile-offset="200">
     <div class="m-container m-container--fluid m-container--full-height">
         <div class="m-stack m-stack--ver m-stack--desktop">
@@ -91,4 +90,4 @@
             </div>
         </div>
     </div>
-</header>
+</header><?php /**PATH /var/www/html/rbcenter/admin/resources/views/admin/layouts/header.blade.php ENDPATH**/ ?>
