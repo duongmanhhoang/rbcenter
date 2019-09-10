@@ -179,8 +179,5 @@
         @if(session('disable'))
         swal("Xóa tạm bài viết thành công!", "", "success")
         @endif
-
-
-
     </script>
 @endsection
