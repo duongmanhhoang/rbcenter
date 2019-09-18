@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Api\Api;
+use App\Http\Controllers\Authenticate\AuthController;
 use App\Http\Requests\Admin\CreateProductRequest;
 use App\Http\Requests\Admin\UpdateProductRequest;
 use Illuminate\Http\Request;
@@ -112,7 +113,7 @@ class ProductController extends Controller
         $api = new Api();
         $data = $request->all();
         $data['slug'] = Str::slug($data['name'], '-');
-        $data['created_by'] = Auth::custom()->id;
+        $data['created_by'] = AuthController::user()->id;
         if ($request->hasFile('image')) {
             $image = $this->uploadImage($request->image);
             $data['image'] = $image->url;
@@ -202,7 +203,7 @@ class ProductController extends Controller
         $api = new Api();
         $p = $api->sendRequest('get', 'api/products/' . $id)->data;
         $time = now()->toDateTimeString();
-        $editer = Auth::custom()->id;
+        $editer = AuthController::user()->id;
 
         if ($p->edited_by == null) {
             $arr = [$time => $editer];
