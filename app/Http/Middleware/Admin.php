@@ -29,8 +29,8 @@ class Admin
                 else{
                     return redirect(route('admin.login'));
                 }
-
             }
+
             return $next($request);
         }
         else{

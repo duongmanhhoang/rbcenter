@@ -62,7 +62,7 @@
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    <?php echo e(\Illuminate\Support\Facades\Auth::custom()->full_name); ?> <span class="caret"></span>
+                                    <?php echo e(\App\Http\Controllers\Authenticate\AuthController::user()->full_name); ?> <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -73,19 +73,14 @@
                                         <?php echo e(__('Logout')); ?>
 
                                     </a>
-
                                     <form id="logout-form" action="<?php echo e(route('admin.logout')); ?>" method="get" style="display: none;">
                                         <?php echo csrf_field(); ?>
                                     </form>
-
-
                                 </div>
-
                             </li>
                         </ul>
                     </div>
                 </div>
-
                 <!-- END: Topbar -->
             </div>
         </div>

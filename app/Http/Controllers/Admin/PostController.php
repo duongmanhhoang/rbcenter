@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Api\Api;
+use App\Http\Controllers\Authenticate\AuthController;
 use App\Http\Requests\Admin\CreatePostRequest;
 use App\Http\Requests\Admin\UpdatePostRequest;
 use App\Http\Requests\Admin\UpdateProductRequest;
@@ -67,7 +68,7 @@ class PostController extends Controller
         $api = new Api();
         $data = $request->all();
         $data['slug'] = Str::slug($data['title'], '-');
-        $data['created_by'] = Auth::custom()->id;
+        $data['created_by'] = AuthController::user()->id;
         if ($request->hasFile('image')) {
             $data['image'] = $this->uploadImage($request->image)->url;
         }
@@ -103,7 +104,7 @@ class PostController extends Controller
         $api = new Api();
         $data = $request->all();
         $post = $api->sendRequest('get', 'api/posts/' . $id)->data;
-        $editer = Auth::custom()->id;
+        $editer =AuthController::user()->id;
         $time = now()->toDateTimeString();
         if ($post->edited_by == null) {
             $arr = [$time => $editer];

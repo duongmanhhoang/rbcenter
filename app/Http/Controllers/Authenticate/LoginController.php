@@ -27,6 +27,7 @@ class LoginController extends Controller
             $user = $api->sendRequest('post', '/api/login', $data)->data;
             if ($user->role_id != 1 && $user->role_id != 100) {
                 $request->session()->flash('role_error');
+
                 return redirect(route('admin.login'));
             } else {
                 if ($request->remember) {
@@ -34,11 +35,9 @@ class LoginController extends Controller
                     $cookie_data = [];
                     $cookie_data['remember_token'] = $user->remember_token;
                     $cookie_data['id'] = $user->id;
-                    $cookie_data['role_id'] = $user->role_id;
                     Cookie::queue(Cookie::make('cookie_admin', json_encode($cookie_data), $minutes));
-
                 } else {
-                    $request->session()->put('admin', $user);
+                    $request->session()->put('admin', $user->id);
                 }
 
                 return redirect(route('admin.index'));
@@ -53,6 +52,7 @@ class LoginController extends Controller
     {
         session()->forget('admin');
         Cookie::queue(Cookie::forget('cookie_admin'));
+
         return redirect(route('admin.login'));
     }
 }
